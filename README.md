@@ -30,7 +30,7 @@ git clone https://github.com/deathxdefeat/ai-cost-estimator-plugin.git .claude/p
 
 ### Claude.ai
 
-Download the `.skill` file from the [Pre-AI Price Tag tool page](https://pre-ai-price-tag.vercel.app) and upload via Settings > Features.
+Download the `.skill` file from the [Pre-AI Price Tag](https://f3strategy.com) and upload via Settings > Features.
 
 ## Usage
 
@@ -84,7 +84,7 @@ Request JSON output for programmatic use (follows the canonical schema in `refer
 
 ## Web tool
 
-Try the interactive version at [pre-ai-price-tag.vercel.app](https://pre-ai-price-tag.vercel.app) — file uploads, visual comparisons, shareable reports.
+Try the interactive version at [f3strategy.com](https://f3strategy.com) — file uploads, visual comparisons, shareable reports.
 
 ## License
 
