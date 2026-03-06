@@ -6,7 +6,7 @@
     "name": "F3 Strategy",
     "url": "https://f3strategy.com"
   },
-  "homepage": "https://f3strategy.com/tools/pre-ai-price-tag",
+  "homepage": "https://pre-ai-price-tag.vercel.app",
   "repository": "https://github.com/deathxdefeat/ai-cost-estimator-plugin",
   "license": "Apache-2.0",
   "keywords": [

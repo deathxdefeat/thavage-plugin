@@ -6,7 +6,7 @@ compatibility: Works in Claude.ai, Claude Code, and Claude API. No external depe
 metadata:
   author: f3-strategy
   version: "1.0.0"
-  website: https://f3strategy.com/tools/pre-ai-price-tag
+  website: https://pre-ai-price-tag.vercel.app
 ---
 
 # AI Cost Estimator
