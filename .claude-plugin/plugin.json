@@ -19,5 +19,6 @@
     "traditional-development",
     "rate-comparison"
   ],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "commands": "./commands/"
 }
