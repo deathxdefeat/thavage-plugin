@@ -4,7 +4,7 @@ Use this spec when the user requests JSON output for the web tool, API, or data 
 
 ## Mode
 
-Always include `"mode": "retrospective"` or `"mode": "prospective"` and then use the matching schema.
+Always include `"mode": "retrospective"`, `"mode": "prospective"`, or `"mode": "modern_agency"` and then use the matching schema.
 
 ## Retrospective Schema
 
@@ -115,6 +115,66 @@ Always include `"mode": "retrospective"` or `"mode": "prospective"` and then use
 }
 ```
 
+## Modern Agency Schema
+
+```json
+{
+  "mode": "modern_agency",
+  "project_name": "string — short name for the project",
+  "project_type": "software",
+  "summary_line": "string — one punchy sentence describing what will be built",
+  "traditional_anchor": {
+    "total_cost": 95000,
+    "total_hours": 700,
+    "calendar_months": 6,
+    "team_size": 4,
+    "line_items": [
+      {
+        "label": "Component name",
+        "hours": 120,
+        "cost": 15000,
+        "rate_basis": "$125/hr senior full-stack dev"
+      }
+    ]
+  },
+  "mode2_additions": {
+    "year_one_total": 6200,
+    "build_phase_cost": 2400,
+    "monthly_operations_cost": 320,
+    "build_timeline_weeks": 10
+  },
+  "modern_agency_quote": {
+    "low_total": 85000,
+    "mid_total": 104000,
+    "high_total": 129000,
+    "timeline_weeks": 14,
+    "line_items": [
+      {
+        "label": "Component name",
+        "hours": 60,
+        "cost": 10500,
+        "rate_basis": "$175/hr senior full-stack / ai engineer"
+      }
+    ],
+    "team_shape": [
+      {
+        "role": "Senior Full-Stack / AI Engineer",
+        "hours": 220,
+        "cost": 38500
+      }
+    ]
+  },
+  "reductions": {
+    "cost_pct": -58,
+    "vs_traditional_cost_pct": -9,
+    "premium_vs_diy_pct": 1577
+  },
+  "speed_multiplier": 5,
+  "hero_stat": "$104,000 midpoint benchmark",
+  "hook_line": "What you could build yourself for $6.2K in year one is still a six-figure partner-build engagement when you want a team on the hook."
+}
+```
+
 ## Schema Rules
 
 - `forecast_full.enabled` = true only when `completion_pct` < 100
@@ -127,3 +187,4 @@ Always include `"mode": "retrospective"` or `"mode": "prospective"` and then use
 - Retrospective `line_items` must have at least 3 items per section; aim for 6–12 for pre-AI
 - Retrospective line items must have all 4 fields populated: `label`, `hours`, `cost`, `rate_basis`
 - Prospective `diy_line_items` should cover build-phase and recurring cost categories and use `label`, `basis`, and `cost`
+- Modern-agency `line_items` should cover the midpoint benchmark and use `label`, `hours`, `cost`, and `rate_basis`

@@ -2,9 +2,10 @@
 
 **What would your project have cost without AI?**
 
-A Claude Code plugin that now supports two flows:
+A Claude Code plugin that now supports three flows:
 - retrospective benchmarking for work you already built with AI
 - prospective DIY year-one budgeting for planned software builds
+- modern-agency benchmarking for what an AI-native partner would likely quote
 
 It produces conservative cost anchors, line-item breakdowns, timeline comparisons, and shareable planning artifacts using the same locked rate table as thavage.com.
 
@@ -12,9 +13,9 @@ It produces conservative cost anchors, line-item breakdowns, timeline comparison
 
 | Component | Path | Purpose |
 |---|---|---|
-| **Skill** | `skills/thavage/SKILL.md` | Shared estimation logic for retrospective and prospective modes |
+| **Skill** | `skills/thavage/SKILL.md` | Shared estimation logic for retrospective, prospective, and modern-agency modes |
 | **JSON spec** | `skills/thavage/references/output-spec.md` | Canonical JSON schema for programmatic output |
-| **Slash commands** | `commands/cost-estimate.md`, `commands/plan-build.md` | `/cost-estimate` for completed work, `/plan-build` for planned builds |
+| **Slash commands** | `commands/cost-estimate.md`, `commands/plan-build.md`, `commands/agency-benchmark.md` | `/cost-estimate` for completed work, `/plan-build` for planned builds, `/agency-benchmark` for modern-agency quotes |
 
 ## Install
 
@@ -53,6 +54,14 @@ Scans your current project context and produces a full pre-AI vs post-AI cost co
 ```
 
 Scans the same project context and produces a DIY year-one build budget plus a traditional-team anchor for a planned software build.
+
+### Modern-agency benchmark command
+
+```
+/agency-benchmark
+```
+
+Scans the same project context and produces a realistic low/mid/high quote range for an AI-native product partner, alongside DIY and traditional anchors.
 
 ### Natural language
 
@@ -100,11 +109,19 @@ Prospective planning estimates include:
 - **Timeline comparison** — AI-assisted build timeline versus traditional delivery
 - **Assumptions** — rate basis, exclusions, confidence level, and scale assumptions
 
+Modern-agency estimates include:
+
+- **Quote range** — low, midpoint, and high benchmark values
+- **DIY vs agency vs traditional comparison** — three-lens decision framing
+- **Quote breakdown** — line items, owners, hours, and midpoint benchmark
+- **Team shape** — role mix, time, and phase emphasis
+- **Assumptions** — inclusions, exclusions, delivery premium, and confidence
+
 Request JSON output for programmatic use. The spec now supports both retrospective and prospective variants in `references/output-spec.md`.
 
 ## Web tool
 
-Try the interactive version at [thavage.com](https://thavage.com) — methodology, examples, use cases, comparisons, file uploads, visual comparisons, and shareable reports.
+Try the interactive version at [thavage.com](https://thavage.com) — methodology, examples, use cases, comparisons, file uploads, visual comparisons, Modern Agency Cost benchmarking, and shareable reports.
 
 ## Privacy Policy
 

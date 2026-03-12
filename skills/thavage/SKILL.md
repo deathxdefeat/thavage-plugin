@@ -1,11 +1,11 @@
 ---
 name: thavage
-description: Estimate what a project would cost with and without AI. Supports retrospective benchmarking for completed work and prospective DIY year-one planning for scoped software builds. Trigger on phrases like "what would this have cost", "cost comparison", "/cost-estimate", "/plan-build", "what will it cost to build", or requests for AI savings, ROI, or traditional-team anchors.
+description: Estimate what a project would cost with and without AI. Supports retrospective benchmarking for completed work, prospective DIY year-one planning, and modern-agency benchmarking for scoped software builds. Trigger on phrases like "what would this have cost", "cost comparison", "/cost-estimate", "/plan-build", "/agency-benchmark", "what will it cost to build", "what would an agency charge", or requests for AI savings, ROI, or traditional-team anchors.
 license: Apache-2.0
 compatibility: Works in Claude.ai, Claude Code, Cowork, and Claude API. No external dependencies required. File system access improves estimates when scanning codebases.
 metadata:
   author: f3-strategy
-  version: "1.2.0"
+  version: "1.3.0"
   website: https://thavage.com
 ---
 
@@ -13,13 +13,15 @@ metadata:
 
 Generate either:
 - a retrospective benchmark showing what completed work would have cost without AI, or
-- a prospective DIY year-one budget for a planned software build, anchored against a traditional team quote.
+- a prospective DIY year-one budget for a planned software build, anchored against a traditional team quote, or
+- a modern-agency benchmark showing what an AI-native partner would likely charge for the same planned build.
 
 ## When to use this skill
 
 - User describes a project and asks what it would have cost
 - User says "/cost-estimate" or "estimate this project"
 - User says "/plan-build" or asks what it will cost to build a planned product
+- User says "/agency-benchmark" or asks what a modern agency would charge
 - User asks about AI savings, ROI, or cost comparison
 - User wants to justify AI tool spend with hard numbers
 - User is building something and wants to know the traditional equivalent cost
@@ -28,6 +30,7 @@ Generate either:
 
 - Use `retrospective` mode when the user already built something or wants a completed-work benchmark.
 - Use `prospective` mode when the user is planning a software build and wants a DIY year-one budget plus a traditional-team anchor.
+- Use `modern_agency` mode when the user is planning a software build and wants a low/mid/high quote range for an AI-native partner.
 - If the mode is ambiguous, ask one short clarifying question only if needed. Otherwise infer from language like "built" vs "want to build".
 
 ## How to gather context
@@ -60,17 +63,18 @@ Use these exact rates. No ranges. No deviation.
 ## Estimation Rules
 
 1. **Value EVERYTHING.** Domain expertise, research, regulatory work, strategy, data sourcing, DevOps, documentation — all get a dollar value. Founder time counts. Thinking counts. Research counts.
-2. **Detect mode** automatically: `retrospective` for completed work, `prospective` for planned builds.
+2. **Detect mode** automatically: `retrospective` for completed work, `prospective` for planned DIY builds, `modern_agency` for partner-build quote benchmarking.
 3. **Retrospective pre-AI line items:** Use the rate table above. If a component spans multiple roles, use the primary role's rate. Aim for 6–12 line items. Minimum 3.
 4. **Retrospective post-AI line items:** AI tools + minimal human oversight. Human oversight hours use $125/hr (senior dev supervising AI output). AI subscription cost: Claude Pro ~$20/mo or actual API cost if known. Minimum 3 line items.
 5. **Prospective DIY budgets are software-first.** Use them for MVPs, internal tools, dashboards, launch sites, and scoped product builds. If the work is heavily physical, regulated, or services-led, say prospective mode is a weak fit.
 6. **Prospective mode must include:** build-phase spend, monthly operating cost, DIY year-one total, and a traditional-team anchor.
-7. **When scale is missing in prospective mode,** assume MVP or early-production usage and state that assumption explicitly.
-8. **Team size** = number of humans needed (not AI tools).
-9. **Calendar time** = wall-clock duration assuming standard work patterns.
-10. **Be conservative.** When uncertain, round hours UP, not down. Don't inflate savings — credibility matters more than impressive numbers.
-11. **Every line item** must have all required fields. Retrospective line items need `label`, `hours`, `cost`, `rate_basis`. Prospective DIY line items need `label`, `basis`, and `cost`.
-12. **All cost values are integers** unless the user explicitly asks for more precision.
+7. **Modern-agency mode must include:** a low/mid/high quote range, midpoint benchmark, team shape, and a comparison against DIY and traditional delivery.
+8. **When scale is missing in a planning mode,** assume MVP or early-production usage and state that assumption explicitly.
+9. **Team size** = number of humans needed (not AI tools).
+10. **Calendar time** = wall-clock duration assuming standard work patterns.
+11. **Be conservative.** When uncertain, round hours UP, not down. Don't inflate savings — credibility matters more than impressive numbers.
+12. **Every line item** must have all required fields. Retrospective line items need `label`, `hours`, `cost`, `rate_basis`. Prospective DIY line items need `label`, `basis`, and `cost`. Modern-agency line items need `label`, `hours`, `cost`, and `rate_basis`.
+13. **All cost values are integers** unless the user explicitly asks for more precision.
 
 ## Calculations
 
@@ -174,6 +178,46 @@ Not included by default: hosting and infrastructure at scale, marketing and cust
 Confidence: [Low / Medium / High] — [one sentence on why]
 ```
 
+### Modern Agency
+
+```
+MODERN AGENCY COST
+
+[One punchy hook line]
+
+DIY vs. MODERN AGENCY vs. TRADITIONAL
+Metric            | DIY with AI | Modern Agency | Traditional Team
+------------------|-------------|---------------|------------------
+Year 1 / Quote    | $X          | $X-$X         | $X
+Delivery Timeline | X weeks     | X weeks       | X months
+Team Shape        | 1-2 people  | X people      | X people
+
+KEY NUMBERS
+Modern agency midpoint: $X
+Quote range: $X-$X
+DIY year-one cost: $X
+Traditional team anchor: $X
+Premium vs DIY: X%
+Savings vs traditional: X%
+
+MODERN AGENCY QUOTE BREAKDOWN
+Component               | Owner | Hours | Rate          | Cost
+------------------------|-------|-------|---------------|--------
+[each component]        | role  | X     | $X/hr [role]  | $X
+MIDPOINT TOTAL          |       | X hrs |               | $X
+
+TEAM SHAPE
+Role                    | Hours | Cost
+------------------------|-------|--------
+[each role]             | X     | $X
+
+ASSUMPTIONS
+Rates: US market 2025–2026
+Included: discovery, design, engineering, QA, launch hardening, and short stabilization
+Not included by default: hosting and infrastructure at scale, marketing and customer acquisition, legal entity formation and procurement paperwork, ongoing maintenance after launch
+Confidence: [Low / Medium / High] — [one sentence on why]
+```
+
 ## What to exclude (state in assumptions)
 
 - Ongoing hosting/infrastructure costs
@@ -184,7 +228,7 @@ Confidence: [Low / Medium / High] — [one sentence on why]
 
 ## JSON output mode
 
-If the user asks for JSON output (for the web tool, API integration, or data export), read `references/output-spec.md` and use the retrospective or prospective variant that matches the mode.
+If the user asks for JSON output (for the web tool, API integration, or data export), read `references/output-spec.md` and use the retrospective, prospective, or modern-agency variant that matches the mode.
 
 ## Tone
 
